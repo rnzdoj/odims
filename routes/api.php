@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Rabdey;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::get('/rabdey/dratshangs/{id}', function($id){
+    $rabdey = Rabdey::findOrFail($id);
+    return $rabdey->dratshangs()->select('id','name')->get();
 });
