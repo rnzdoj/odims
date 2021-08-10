@@ -1,44 +1,26 @@
 @extends('layouts.monk')
-@section('style')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-@endsection
-
 @section('content')
-<div class="card shadow p-2">
-
-    <table id="table_id" class="display">
+<div class="card shadow p-4">
+    <table class="compact order-column" id="stipend-table">
         <thead>
-            <tr>
-                <th>Month</th>
-                <th>Amount</th>
-                <th>Status</th>
-            </tr>
+            <th>Id</th>
+            <th>Month</th>
+            <th>Status</th>
         </thead>
-        <tbody>
-            @foreach ($stipends as $stipend)
-            <tr>
-                <td>{{$stipend->created_at->format('M')}}</td>
-                <td></td>
-                <td>
-                    @if ($stipend->status)
-                        Recived
-                    @else
-                        Not Recived
-                    @endif
-                    
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
     </table>
 </div>
 <script>
-    $(document).ready( function () {
-        $('#table_id').DataTable();
-    } );
+    $(function() {
+        $('#stipend-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{!! route('datatables.user.getMyStipend') !!}',
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'status', name: 'status' },
+            ]
+        });
+    });
 </script>
-@endsection
-
-@section('script')
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 @endsection

@@ -3,7 +3,7 @@
 <h3 class="text-danger mb-4">ཟུར་གདོག།</h3>
 <div class="row mb-3">
     <div class="col-lg-4">
-        <div class="card border border-danger mb-3">
+        <div class="card  mb-3">
             <div class="card-body text-center shadow">
                 <img class="rounded-circle mb-3 mt-4" src="/storage/avater/{{$monk->image}}" width="160" height="160" alt="Profile">
                 <div class="mb-3">
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="card border border-danger shadow mb-4">
+        <div class="card  shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="text-danger font-weight-bold m-0">Address Setting</h6>
             </div>
@@ -39,7 +39,7 @@
 <div class="col-lg-8">
     <div class="row">
         <div class="col">
-            <div class="card border border-danger shadow mb-3">
+            <div class="card  shadow mb-3">
                 <div class="card-header py-3">
                     <p class="text-danger m-0 font-weight-bold">User Settings</p>
                 </div>
@@ -72,7 +72,7 @@
                     </form>
                 </div>
             </div>
-            <div class="card border border-danger shadow">
+            <div class="card  shadow">
                 <div class="card-header py-3">
                     <p class="text-danger m-0 font-weight-bold">Bio Data Settings</p>
                 </div>
@@ -201,7 +201,7 @@
 <div class="row">
     <div class="col">
         
-        <div class="card border border-danger shadow mb-5">
+        <div class="card  shadow mb-5">
             <div class="card-header py-3">
                 <p class="text-danger m-0 font-weight-bold">Parents</p>
             </div>
