@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Monk;
 use App\Models\Stipend;
+use App\Models\Dratshang;
+use App\Models\Rabdey;
+
 use Datatables;
 
 class DataTableController extends Controller
@@ -17,9 +20,6 @@ class DataTableController extends Controller
             })
             ->editColumn('status', function(stipend $stipend){
                 return $stipend->status == 1 ? '༡' : '༠';
-            })
-            ->setRowClass(function(Stipend $stipend){
-                return $stipend->status == 1 ?  'text-success' : 'text-danger';
             })
             ->make(true);
     }
@@ -36,6 +36,11 @@ class DataTableController extends Controller
             ->addColumn('education', function(Monk $monk){
                 return $monk->education->level;
             })
+            ->addColumn('action', function(Monk $monk){
+                $btn = '<a href="'.route('monk.show',$monk->id).'" class="edit btn btn-info btn-sm mr-1">View</a>';
+                $btn = $btn.'<a href="'.route('monk.edit', $monk->id).'" class="edit btn btn-primary btn-sm mr-1">Edit</a>';
+                return $btn;
+            })
             ->removeColumn('id')
             ->removeColumn('dratshang_id')
             ->removeColumn('user_id')
@@ -47,9 +52,39 @@ class DataTableController extends Controller
             ->make(true);
     }
     public function getDratshangStipend(Datatables $datatables) {
-        $stipends = Stipend::all();
-        return Datatables::of($stipends)->make(true);
+        $dratshang = Dratshang::find(auth()->user()->monk->dratshang_id);
+        return Datatables::of($dratshang->stipends)
+            ->addColumn('name', function(Stipend $stipend){
+                return $stipend->monk->user->name;
+            })
+            ->addColumn('month', function(Stipend $stipend){
+                return $stipend->created_at->format('M');
+            })
+            ->editColumn('status', function(Stipend $stipend){
+                return $stipend->status == 1 ? 'Yes' : "No";
+            })
+            ->make(true);
     }
-
-
+    public function getRabdeys(){
+        $rabdeys = Rabdey::all();
+        return Datatables::of($rabdeys)
+                ->addColumn('totalDratshang',function(Rabdey $rabdey){
+                    $total = Dratshang::where('rabdey_id', $rabdey->id)->count();
+                    return $total;
+                })
+                ->addColumn('action',function(Rabdey $rabdey){
+                    $btn = '<a href="'.route('manager.dratshang.index', $rabdey->id).'" class="edit btn btn-info btn-sm mr-1">View All Dratshang</a>';
+                    return $btn;
+                })
+                ->make(true);
+    }
+    public function getDratshangs($id){
+        $dratshangs = Dratshang::where('rabdey_id', $id)->get();
+        return Datatables::of($dratshangs)
+                ->addColumn('totalMonk', function(Dratshang $dratshang){
+                    $total = Monk::where('dratshang_id', $dratshang->id)->count();
+                    return $total;
+                })
+                ->make(true);
+    }
 }

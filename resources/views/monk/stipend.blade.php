@@ -1,7 +1,7 @@
 @extends('layouts.monk')
 @section('content')
 <div class="card shadow p-4">
-    <table class="compact order-column" id="stipend-table">
+    <table class="w-25 mx-auto compact order-column" id="stipend-table">
         <thead>
             <th>Id</th>
             <th>Month</th>

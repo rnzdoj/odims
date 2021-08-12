@@ -1,7 +1,7 @@
-@extends('layouts.dratshang')
+@extends('layouts.manager')
 
 @section('content')
-<div class="card card-shadow">
+<div class="card card-shadow mb-4">
     <div class="card-body">
         <table id="monks-table" class="display table compact">
             <thead>
@@ -14,6 +14,7 @@
                     <th>Reg age</th>
                     <th>Position</th>
                     <th>Education</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
@@ -24,7 +25,7 @@
         $('#monks-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('datatables.dratshang.getMonks') !!}',
+            ajax: '{!! route('datatables.manager.getMonks') !!}',
             columns: [
                 { data: 'cid', name: 'cid'},
                 { data: 'name', name: 'name'},
@@ -33,7 +34,8 @@
                 { data: 'year', name: 'year'},
                 { data: 'regage', name: 'regage'},
                 { data: 'position', name: 'position'},
-                { data: 'education', name: 'education'}
+                { data: 'education', name: 'education'},
+                { data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
     });

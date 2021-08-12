@@ -14,10 +14,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{asset('assets/dratshang/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/dratshang/fonts/fontawesome-all.min.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/dratshang/fonts/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/dratshang/fonts/fontawesome5-overrides.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/manager/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/manager/fonts/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/manager/fonts/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/manager/fonts/fontawesome5-overrides.min.css') }}">
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 </head>
@@ -25,7 +25,7 @@
 <body id="page-top">
     
     <div id="wrapper">
-        @include('dratshang.components.sidebar')
+        @include('manager.components.sidebar')
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 @include('componets.topbar')
@@ -41,9 +41,9 @@
     </a>
 
     
-    <script src="{{asset('assets/dratshang/js/jquery.min.js') }}"></script>
-    <script src="{{asset('assets/dratshang/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{asset('assets/dratshang/js/theme.js') }}"></script>
+    <script src="{{asset('assets/manager/js/jquery.min.js') }}"></script>
+    <script src="{{asset('assets/manager/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{asset('assets/manager/js/theme.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>

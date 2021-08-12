@@ -15,6 +15,9 @@ use Datatables;
 
 class DashboardController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function profile(){
         return view('monk.profile',[
             'monk' => Monk::findOrFail(auth()->user()->monk->id),
@@ -22,6 +25,12 @@ class DashboardController extends Controller
             'dratshangs' => Dratshang::all(),
             'positions' => Position::all(),
             'educations' => Education::all(),
+        ]);
+    }
+    public function dashboard()
+    {
+        return view('manager.dashboard',[
+            'total' => Monk::where('dratshang_id', auth()->user()->monk->dratshang_id)->count(),
         ]);
     }
 }

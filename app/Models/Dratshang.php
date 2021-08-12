@@ -20,4 +20,9 @@ class Dratshang extends Model
     public function group(){
         return $this->belongsTo(Group::class);
     }
+
+    // hasmanythroug
+    public function stipends(){
+        return $this->hasManyThrough(Stipend::class, Monk::class);
+    }
 }

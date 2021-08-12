@@ -41,9 +41,6 @@ class Monk extends Model
     public function position(){
         return $this->belongsTo(Position::class);
     }
-    // public function rabdey(){
-    //     return $this->belongsTo(Rabdey::class);
-    // }
     public function dratshang(){
         return $this->belongsTo(Dratshang::class);
     }

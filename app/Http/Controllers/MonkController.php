@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Monk;
 use Illuminate\Http\Request;
+use App\Models\Rabdey;
+use App\Models\Dratshang;
+use App\Models\Position;
+use App\Models\Education;
 
 class MonkController extends Controller
 {
@@ -46,7 +50,8 @@ class MonkController extends Controller
      */
     public function show(Monk $monk)
     {
-        //
+        // dratshang
+        return view('manager.monk.show',['monk'=>$monk]);
     }
 
     /**
@@ -57,7 +62,14 @@ class MonkController extends Controller
      */
     public function edit(Monk $monk)
     {
-        //
+        // dratshang
+        return view('manager.monk.edit',[
+            'monk'=>$monk,
+            'rabdeys' => Rabdey::all(),
+            'dratshangs' => Dratshang::all(),
+            'positions' => Position::all(),
+            'educations' => Education::all(),
+        ]);
     }
 
     /**
@@ -69,6 +81,7 @@ class MonkController extends Controller
      */
     public function update(Request $request, Monk $monk)
     {
+        // monk
         try {
             $monk->update([
                 'cid' => $request->cid,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stipend;
+use App\Models\Monk;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -27,7 +28,8 @@ class StipendController extends Controller
      */
     public function create()
     {
-        //
+        $monks = Monk::where('dratshang_id', auth()->user()->monk->dratshang_id)->get();
+        return view('manager.stipend.create')->with('monks', $monks);
     }
     /**
      * Store a newly created resource in storage.
@@ -37,7 +39,14 @@ class StipendController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return dd($request);
+        for ($i=0; $i < count($request->monk_id); $i++) { 
+            $stipend = new Stipend();
+            $stipend->monk_id =  $request->monk_id[$i];
+            $stipend->status = $request->status[$i] ? 1 : 0;
+            $stipend->save();
+        }
+        return redirect()->route('manager.stipend');
     }
 
     /**
