@@ -69,7 +69,16 @@ class FatherController extends Controller
      */
     public function update(Request $request, Father $father)
     {
-        //
+        $this->authorize('update', $father);
+        try {
+            $father->cid = $request->cid;
+            $father->name = $request->name;
+            $father->save();
+            return redirect()->back()->with('success','Your request have been successfull');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('fail','Your request failed');
+        }
+
     }
 
     /**

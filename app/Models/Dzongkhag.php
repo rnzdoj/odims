@@ -12,4 +12,7 @@ class Dzongkhag extends Model
     public function address(){
         return $this->hasMany(Address::class);
     }
+    public function gewogs(){
+        return $this->hasMany(Gewog::class);
+    }
 }

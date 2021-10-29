@@ -16,6 +16,11 @@ class CreateVillagesTable extends Migration
         Schema::create('villages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('gewog_id')
+                  ->nullable()
+                  ->constrained('gewogs')
+                  ->onDelete('set null')
+                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

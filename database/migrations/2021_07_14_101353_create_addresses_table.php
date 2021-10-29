@@ -38,6 +38,7 @@ class CreateAddressesTable extends Migration
                   ->constrained('villages')
                   ->onDelete('set null')
                   ->onUpdate('cascade');
+                  
             $table->timestamps();
         });
     }

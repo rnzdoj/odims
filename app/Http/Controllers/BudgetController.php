@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth', 'can:admin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,8 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', Budget::class);
+        return view('budget.index');
     }
 
     /**
@@ -35,7 +39,17 @@ class BudgetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Budget::class);
+        try {
+            $budget = new Budget();
+            $budget->dratshang_id = $request->dratshang_id;
+            $budget->amount = $request->amount;
+            $budget->status = $request->status ? 1 : 0;
+            $budget->save();
+            return redirect()->back()->with('success','Your request have been successfull');;
+        } catch (\Thorowable $th){
+            return redirect()->back()->with('success','Your request Faild');;
+        }
     }
 
     /**

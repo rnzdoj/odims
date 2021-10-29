@@ -69,7 +69,11 @@ class MotherController extends Controller
      */
     public function update(Request $request, Mother $mother)
     {
-        //
+        $this->authorize('update', $mother);
+        $mother->cid = $request->cid;
+        $mother->name = $request->name;
+        $mother->save();
+        return redirect()->back()->with('success', 'Your request is successfull');
     }
 
     /**

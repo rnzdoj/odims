@@ -12,8 +12,8 @@ class Address extends Model
     public function monk(){
         return $this->belongsTo(Monk::class);
     }
-    public function dzongkhang(){
-        return $this->belongsTo(Dzongkhang::class);
+    public function dzongkhag(){
+        return $this->belongsTo(Dzongkhag::class);
     }
     public function gewog(){
         return $this->belongsTo(Gewog::class);

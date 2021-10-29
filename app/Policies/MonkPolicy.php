@@ -4,6 +4,8 @@ namespace App\Policies;
 
 use App\Models\Monk;
 use App\Models\User;
+use App\Models\Role;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MonkPolicy
@@ -18,7 +20,7 @@ class MonkPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return in_array($user->role_id, array(Role::ADMIN, Role::MANAGER, ROle::USER));
     }
 
     /**
@@ -30,7 +32,18 @@ class MonkPolicy
      */
     public function view(User $user, Monk $monk)
     {
-        //
+        if($user->isUser() && $monk->user->id == $user->id){
+            return true;
+        } 
+        else if($user->isManager() && $user->monk->dratshang->id == $monk->dratshang->id){
+            return true;
+        }
+        else if ($user->isAdmin()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -53,7 +66,15 @@ class MonkPolicy
      */
     public function update(User $user, Monk $monk)
     {
-        //
+        if($user->isUser() && $monk->user->id == $user->id){
+            return true;
+        } else if($user->isManager() && $monk->dratshang->id == $user->monk->dratshang->id){
+            return true;
+        }else if($user->isAdmin()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -89,6 +110,9 @@ class MonkPolicy
      */
     public function forceDelete(User $user, Monk $monk)
     {
-        //
+        if($user->isAdmin()){
+            return true;
+        }
+        return false;
     }
 }

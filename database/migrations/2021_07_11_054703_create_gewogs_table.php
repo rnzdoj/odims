@@ -16,6 +16,12 @@ class CreateGewogsTable extends Migration
         Schema::create('gewogs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+
+            $table->foreignId('dzongkhag_id')
+                  ->nullable()
+                  ->constrained('dzongkhags')
+                  ->onDelete('set null')
+                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

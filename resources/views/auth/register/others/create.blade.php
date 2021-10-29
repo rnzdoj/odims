@@ -12,7 +12,7 @@
                         @csrf
                        
                         <div class="form-group row">
-                            <label for="education" class="col-md-4 col-form-label text-md-right">{{ __('Education') }}</label>
+                            <label for="education" class="col-md-4 col-form-label text-md-left">{{ __('Education') }}</label>
                             <div class="col-md-6">
                                 <select id="education" class="form-control" @error('education') is-invalid @enderror name="education" value="{{ old('education') }}" required autofocus>
                                     <optgroup label="Education">
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position') }}</label>
+                            <label for="position" class="col-md-4 col-form-label text-md-left">{{ __('Position') }}</label>
                             <div class="col-md-6">
                                 <select id="position" class="form-control" @error('position') is-invalid @enderror name="position" value="{{ old('position') }}" required autofocus>
                                     <optgroup label="Position">
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="rabdey" class="col-md-4 col-form-label text-md-right">{{ __('Rabdey') }}</label>
+                            <label for="rabdey" class="col-md-4 col-form-label text-md-left">{{ __('Rabdey') }}</label>
                             <div class="col-md-6">
                                 <select id="rabdey" class="form-control" @error('rabdey') is-invalid @enderror name="rabdey" value="{{ old('rabdey') }}" required autocomplete="rabdey" autofocus>
                                     <optgroup label="rabdey">
@@ -65,7 +65,7 @@
                             </div>    
                         </div>
                         <div class="form-group row">
-                            <label for="dratshang" class="col-md-4 col-form-label text-md-right">{{ __('Dratshang') }}</label>
+                            <label for="dratshang" class="col-md-4 col-form-label text-md-left">{{ __('Dratshang') }}</label>
                             <div class="col-md-6">
                                 <select id="dratshang" class="form-control" @error('dratshang') is-invalid @enderror name="dratshang" value="{{ old('dratshang') }}" required autocomplete="dratshang" autofocus>
                                     <optgroup label="dratshang" name="optgroup">

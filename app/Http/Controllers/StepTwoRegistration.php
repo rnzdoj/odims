@@ -32,7 +32,7 @@ class StepTwoRegistration extends Controller
         if($request->hasFile('image')){
             $filename = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = $request->image->getClientOriginalExtension();
-            $filenameToStore = $filename.time().$extension;
+            $filenameToStore = $filename.time().'.'.$extension;
             $path = $request->image->storeAs(
                 'public/avater',
                 $filenameToStore
@@ -65,20 +65,10 @@ class StepTwoRegistration extends Controller
             $village = new Village();
             $village->name = $request->village;
             $village->save();
-
             $address->village_id = $village->id;
-        }
-        if(!Gewog::where('name', $request->gewog)->get()->isEmpty()){
-            $gewog = Gewog::where('name', $request->gewog)->first();
-            $address->gewog_id = $gewog->id; 
-        } else {
-            $gewog = new Gewog();
-            $gewog->name = $request->gewog;
-            $gewog->save();
-            
-            $address->gewog_id = $gewog->id; 
-        }
-
+        }           
+        
+        $address->gewog_id = $gewog->id; 
         $address->dzongkhag_id = $request->dzongkhag;
         $address->save();
 

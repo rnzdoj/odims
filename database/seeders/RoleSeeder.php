@@ -27,6 +27,6 @@ class RoleSeeder extends Seeder
                 'name' => 'user',
             ],
         ];
-        Role::insert($roles);
+        // Role::insert($roles);
     }
 }

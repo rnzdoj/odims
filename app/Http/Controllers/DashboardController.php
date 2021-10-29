@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
     public function profile(){
-        return view('monk.profile',[
+        return view('user.profile',[
             'monk' => Monk::findOrFail(auth()->user()->monk->id),
             'rabdeys' => Rabdey::all(),
             'dratshangs' => Dratshang::all(),
@@ -31,6 +31,8 @@ class DashboardController extends Controller
     {
         return view('manager.dashboard',[
             'total' => Monk::where('dratshang_id', auth()->user()->monk->dratshang_id)->count(),
+            'dratshangs' => Dratshang::count(),
+            'rabdeys' => Rabdey::count(),
         ]);
     }
 }

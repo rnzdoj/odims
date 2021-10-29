@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Budget extends Model
 {
     use HasFactory;
+    public function dratshang(){
+        return $this->belongsTo(Dratshang::class);
+    }
 }

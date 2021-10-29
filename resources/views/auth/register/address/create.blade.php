@@ -12,14 +12,11 @@
                         @csrf
 
                         <div class="form-group row">
+                            
                             <label for="dzongkhag" class="col-md-4 col-form-label text-md-right">{{ __('Dzongkhag') }}</label>
-
                             <div class="col-md-6">
                                 <select id="dzongkhag" class="form-control" @error('dzongkhag') is-invalid @enderror name="dzongkhag" value="{{ old('dzongkhag') }}" required autocomplete="dzongkhag" autofocus>
-                                    <optgroup label="Dzongkhag">
-                                        @foreach ($dzongkhags as $dzongkhag)
-                                            <option value="{{$dzongkhag->id}}" selected="">{{$dzongkhag->name}}</option>
-                                        @endforeach
+                                    <optgroup label="Dzongkhag" id="dzongkhag-optgroup">
                                     </optgroup>
                                 </select>
                                 @error('dzongkhag')
@@ -34,8 +31,10 @@
                             <label for="gewog" class="col-md-4 col-form-label text-md-right">{{ __('Gewog') }}</label>
 
                             <div class="col-md-6">
-                                <input id="gewog" type="text" class="form-control @error('gewog') is-invalid @enderror" name="gewog" value="{{ old('gewog') }}" required autocomplete="gewog">
-
+                               <select id="gewog" class="form-control" value="{{ old('gewog') }}" required autocomplete="gewog" autofocus>
+                                    <optgroup label="Gewog" id="gewog-optgroup">
+                                    </optgroup>
+                                </select>
                                 @error('gewog')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -71,4 +70,28 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    $(function(){
+        $.get('/api/dzongkhags', function(dzongkhags){
+            var option = ``;
+            dzongkhags.forEach(dzongkhag => {
+                option = option + `<option value="${dzongkhag->id}">${dzongkhag->name}</option>`;
+            });
+            $('#dzongkhag-optgroup').epmty().append(option);
+        });
+        $('#dzongkhag-optgroup').on('change', function(e){
+            const id = $('#dzongkhag').val();
+            var option = ``;
+            $.get(`/api/dzongkhags/${id}/gewogs`, function($gewogs){
+                var option = "";
+                gewogs.forEach(gewog => {
+                    option = option + `<option value="${gewog->id}">${gewog->name}</option>`;
+                });
+                $('#gewog-optgroup').epmty().append(option);
+            });
+        });
+    });
+</script>
 @endsection

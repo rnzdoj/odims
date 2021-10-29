@@ -11,14 +11,19 @@ use App\Models\Education;
 
 class MonkController extends Controller
 {
+    public function __construct()
+    {
+        # code...
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+        $this->authorize('viewAny', Monk::class);
+        return view('monk.index');
     }
 
     /**
@@ -26,10 +31,7 @@ class MonkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create(){}
 
     /**
      * Store a newly created resource in storage.
@@ -37,10 +39,7 @@ class MonkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request){}
 
     /**
      * Display the specified resource.
@@ -50,8 +49,8 @@ class MonkController extends Controller
      */
     public function show(Monk $monk)
     {
-        // dratshang
-        return view('manager.monk.show',['monk'=>$monk]);
+        $this->authorize('view', $monk);
+        return view('monk.show',['monk'=>$monk]);
     }
 
     /**
@@ -62,8 +61,8 @@ class MonkController extends Controller
      */
     public function edit(Monk $monk)
     {
-        // dratshang
-        return view('manager.monk.edit',[
+        $this->authorize('update', $monk);
+        return view('monk.edit',[
             'monk'=>$monk,
             'rabdeys' => Rabdey::all(),
             'dratshangs' => Dratshang::all(),
@@ -81,7 +80,8 @@ class MonkController extends Controller
      */
     public function update(Request $request, Monk $monk)
     {
-        // monk
+        $request->user()->can('update', $monk);
+        // $this->authorize('update', $monk);
         try {
             $monk->update([
                 'cid' => $request->cid,
@@ -92,9 +92,9 @@ class MonkController extends Controller
                 'dratshang_id' => $request->dratshang,
                 'education_id' => $request->education
             ]);
-            return redirect()->back()->with('bio-data-update-success', 'UPdated');
+            return redirect()->back()->with('success', 'Your request have been successful');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('bio-data-update-fail', 'Failed');
+            return redirect()->back()->with('fail', 'Your request failed');
         }
     }
 
@@ -106,6 +106,8 @@ class MonkController extends Controller
      */
     public function destroy(Monk $monk)
     {
-        //
+        $this->authorize('forceDelete', $monk);
+        // $monk->delete();
+        return redirect()->route('monk.index')->with('success','Your request have been successfull');
     }
 }

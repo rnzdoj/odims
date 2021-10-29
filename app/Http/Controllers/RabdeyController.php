@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rabdey;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use App\Models\Rabdey;
 
 class RabdeyController extends Controller
 {
@@ -14,7 +15,8 @@ class RabdeyController extends Controller
      */
     public function index()
     {
-        return view('manager.rabdey.index');
+        $this->authorize('viewAny', Rabdey::class);
+        return view('rabdey.index');
     }
 
     /**
@@ -22,10 +24,7 @@ class RabdeyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create(){}
 
     /**
      * Store a newly created resource in storage.
@@ -35,19 +34,19 @@ class RabdeyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Rabdey::class);
+        $rabdey = new Rabdey();
+        $rabdey->name = $request->name;
+        $rabdey->save();
+        return redirect()->back()->with('success',"Your request for new rabdey have been successfull");
     }
-
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Rabdey  $rabdey
      * @return \Illuminate\Http\Response
      */
-    public function show(Rabdey $rabdey)
-    {
-        //
-    }
+    public function show(Rabdey $rabdey){}
 
     /**
      * Show the form for editing the specified resource.
@@ -55,10 +54,7 @@ class RabdeyController extends Controller
      * @param  \App\Models\Rabdey  $rabdey
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rabdey $rabdey)
-    {
-        //
-    }
+    public function edit(Rabdey $rabdey){}
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +65,10 @@ class RabdeyController extends Controller
      */
     public function update(Request $request, Rabdey $rabdey)
     {
-        //
+        $this->authorize('update', $rabdey);
+        $rabdey->name = $request->name;
+        $rabdey->save();
+        return redirect()->back()->with('success', 'Your update request has been successfull');
     }
 
     /**
@@ -80,6 +79,8 @@ class RabdeyController extends Controller
      */
     public function destroy(Rabdey $rabdey)
     {
-        //
+        $this->authorize('forceDelete', $rabdey);
+        $rabdey->delete();
+        return redirect()->back()->with('success', 'Your delete request has been successfull');
     }
 }

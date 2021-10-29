@@ -12,4 +12,7 @@ class Village extends Model
     public function address(){
         return $this->hasMany(Address::class);
     }
+    public function gewog(){
+        return $this->belongsTo(Gewog::class);
+    }
 }

@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::REGISTRATION_STEP_2;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -47,14 +47,14 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+    //     ]);
+    // }
 
     /**
      * Create a new user instance after a valid registration.
@@ -64,11 +64,50 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'role_id' => '2',
-            'password' => Hash::make($data['password']),
+
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->role_id = '3';
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        $filename = pathinfo($data['image']->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $data['image']->getClientOriginalExtension();
+        $filenameToStore = $filename.time().'.'.$extension;
+        $path = $data[image]->storeAs(
+            'public/avater',
+            $filenameToStore
+        );
+        $user->monk()->create([
+            'regno' => $data['regno'],
+            'regage' => $data['regage'],
+            'year' => $data['year'],
+            'cid' => $data['cid'],
+            'dob' => $data['dob'],
+            'choename' => $data['choename'],
+            'image' => $filenameToStore,
         ]);
+        $address = new Address();
+        $address->monk_id = $user->monk->id;
+        if(!Village::where('name',$request->village)->get()->isEmpty()){
+            $village = Village::where('name',$request->village)->first();
+            $address->village_id = $village->id;
+        } else {
+            $village = new Village();
+            $village->name = $request->village;
+            $village->save();
+            $address->village_id = $village->id;
+        }           
+
+        $address->gewog_id = $data['gewog_id']; 
+        $address->dzongkhag_id = $data['dzongkhag_id'];
+        $address->save();
+        // return User::create([
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'role_id' => '3',
+        //     'password' => Hash::make($data['password']),
+        // ]);
     }
 }

@@ -12,20 +12,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    public function index(){}
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create(){}
 
     /**
      * Store a newly created resource in storage.
@@ -33,10 +27,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request){}
 
     /**
      * Display the specified resource.
@@ -44,10 +35,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
-        //
-    }
+    public function show(User $user){}
 
     /**
      * Show the form for editing the specified resource.
@@ -55,10 +43,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
-        //
-    }
+    public function edit(User $user){}
 
     /**
      * Update the specified resource in storage.
@@ -69,11 +54,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // monk
+        $this->authorize('update', $user);
         $user->update([
             'name' => $request->username,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('success','Your request is successfull');
     }
 
     /**
@@ -82,8 +67,5 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
-    {
-        //
-    }
+    public function destroy(User $user){}
 }
